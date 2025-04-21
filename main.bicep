@@ -14,7 +14,7 @@ param vnet2StorageSubnetPrefix string = '10.20.2.0/24'
 
 
 // Deploying VNETs
-module vnet1 './files/vnet.bicep' = {
+module vnet1 './vnet.bicep' = {
   name: 'vnet1Deployment'  
   params: {
     vnetName: vnet1Name
@@ -26,7 +26,7 @@ module vnet1 './files/vnet.bicep' = {
 }
 
 
-module vnet2 './files/vnet.bicep' = {
+module vnet2 './vnet.bicep' = {
   name: 'vnet2Deployment'
   params: {
     vnetName: vnet2Name
@@ -38,7 +38,7 @@ module vnet2 './files/vnet.bicep' = {
 }
 
 // Peering both of the vnets
-module vnet1Tovnet2Peering './files/vnetpeer.bicep' = {
+module vnet1Tovnet2Peering './vnetpeer.bicep' = {
   name: 'vnet1-vnet2'
   params: {
     sourceVnetName: vnet1Name
@@ -51,7 +51,7 @@ module vnet1Tovnet2Peering './files/vnetpeer.bicep' = {
 }
 
 
-module vnet2Tovnet1Peering './files/vnetpeer.bicep' = {
+module vnet2Tovnet1Peering './vnetpeer.bicep' = {
   name: 'vnet2-vnet1'
   params: {
     sourceVnetName: vnet2Name
@@ -63,7 +63,7 @@ module vnet2Tovnet1Peering './files/vnetpeer.bicep' = {
   ]
 }
 
-module vm1 './files/vm.bicep' = {
+module vm1 './vm.bicep' = {
   name: 'vm1Deployment'
   params: {
     vmName: 'vm1'
@@ -74,7 +74,7 @@ module vm1 './files/vm.bicep' = {
 }
 
 // Deploying Vms in both of the vnets
-module vm2 './files/vm.bicep' = {
+module vm2 './vm.bicep' = {
   name: 'vm2Deployment'
   params: {
     vmName: 'vm2'
@@ -85,7 +85,7 @@ module vm2 './files/vm.bicep' = {
 }
 
 // Adding storage account 
-module storage1 './files/storage.bicep' = {
+module storage1 './storage.bicep' = {
   name: 'storage1Deployment'
   params: {
     storageAccountName: 'st${uniqueString(resourceGroup().id)}1'
@@ -93,7 +93,7 @@ module storage1 './files/storage.bicep' = {
   }
 }
 
-module storage2 './files/storage.bicep' = {
+module storage2 './storage.bicep' = {
   name: 'storage2Deployment'
   params: {
     storageAccountName: 'st${uniqueString(resourceGroup().id)}2'
@@ -102,7 +102,7 @@ module storage2 './files/storage.bicep' = {
 }
 
 // Add after VM and storage modules
-module monitor './files/monitor.bicep' = {
+module monitor './monitor.bicep' = {
   name: 'monitorDeployment'
   params: {
     location: location
